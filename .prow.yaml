@@ -12,17 +12,61 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# presubmits:
-#   - name: pre-PROJECT-verify-boilerplate
-#     always_run: true
-#     decorate: true
-#     clone_uri: "ssh://git@github.com/OWNER/PROJECT.git"
-#     spec:
-#       containers:
-#         - image: quay.io/kubermatic-labs/boilerplate:v0.1.1
-#           command:
-#             - ./hack/verify-boilerplate.sh
-#           resources:
-#             requests:
-#               cpu: 200m
-#               memory: 256Mi
+presubmits:
+  - name: pre-kubermatic-kubelet-verify-boilerplate
+    always_run: true
+    decorate: true
+    clone_uri: "ssh://git@github.com/kubermatic/kubelet.git"
+    spec:
+      containers:
+        - image: quay.io/kubermatic-labs/boilerplate:v0.1.1
+          command:
+            - ./hack/verify-boilerplate.sh
+          resources:
+            requests:
+              cpu: 200m
+              memory: 256Mi
+
+  - name: pre-kubermatic-kubelet-test-building-v1.19
+    always_run: true
+    decorate: true
+    clone_uri: "ssh://git@github.com/kubermatic/kubelet.git"
+    spec:
+      containers:
+        - image: quay.io/containers/buildah:v1.17.0
+          command:
+            - ./hack/ci/build-images.sh
+          env:
+            - name: DRY_RUN
+              value: superdry
+            - name: MINOR_VERSION
+              value: v1.19
+          # docker-in-docker needs privileged mode
+          securityContext:
+            privileged: true
+          resources:
+            requests:
+              cpu: 2
+              memory: 3Gi
+
+  - name: pre-kubermatic-kubelet-test-building-v1.20
+    always_run: true
+    decorate: true
+    clone_uri: "ssh://git@github.com/kubermatic/kubelet.git"
+    spec:
+      containers:
+        - image: quay.io/containers/buildah:v1.17.0
+          command:
+            - ./hack/ci/build-images.sh
+          env:
+            - name: DRY_RUN
+              value: superdry
+            - name: MINOR_VERSION
+              value: v1.20
+          # docker-in-docker needs privileged mode
+          securityContext:
+            privileged: true
+          resources:
+            requests:
+              cpu: 2
+              memory: 3Gi

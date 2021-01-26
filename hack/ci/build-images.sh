@@ -19,37 +19,53 @@ set -euo pipefail
 cd $(dirname $0)/../..
 source hack/lib.sh
 
+if [ -z "${MINOR_VERSION:-}" ]; then
+  echodate "\$MINOR_VERSION not set, cannot build Docker images."
+  exit 1
+fi
+
+echodate "Building Docker image for $MINOR_VERSION ..."
+cd "$MINOR_VERSION"
+
 repository=quay.io/kubermatic/kubelet
-version=$(git describe --tags --match='v*' --always)
-defaultArch=amd64
+version=$(cat version)
+architectures="amd64 arm64"
 
-publish() {
-  local localName="$1"
-  local remoteName="$repository:$2"
+echodate "Kubernetes version: $version"
 
-  echodate "Pushing $remoteName ..."
-  docker tag "$localName" "$remoteName"
-  docker push "$remoteName"
-  docker rmi "$remoteName"
-}
+# build all images
+for arch in $architectures; do
+  fullTag="$repository:$version-$arch"
 
-echodate "Logging into Quay"
-docker ps > /dev/null 2>&1 || start-docker.sh
-retry 5 docker login -u "$QUAY_IO_USERNAME" -p "$QUAY_IO_PASSWORD" quay.io
-echodate "Successfully logged into Quay"
-
-for arch in amd64 arm64; do
-  tmpName="kubelet:$version-$arch"
-  echodate "Building Docker image for $arch ..."
-  docker build -t "$tmpName" -f "Dockerfile.$arch" .
-
-  if [ $arch == "$defaultArch" ]; then
-    publish "$tmpName" "$version"
-  fi
-  publish "$tmpName" "$version-$arch"
-
-  echodate "Untagging temporary image ..."
-  docker rmi "$tmpName"
+  echodate "Building $version-$arch ..."
+  buildah build-using-dockerfile \
+    --file "Dockerfile.$arch" \
+    --tag "$fullTag" \
+    --arch "$arch" \
+    --override-arch "$arch" \
+    --build-arg "VERSION=$version" \
+    --format=docker \
+    .
 done
+
+# create multi-arch manifest
+manifest="$repository:$version"
+
+echodate "Creating manifest $manifest ..."
+buildah manifest create "$manifest"
+for arch in $architectures; do
+  buildah manifest add "$manifest" "$repository:$version-$arch"
+done
+
+# push manifest, except in presubmits
+if [ -z "${DRY_RUN:-}" ]; then
+  echodate "Logging into Quay"
+  retry 5 buildah login --username "$QUAY_IO_USERNAME" --password "$QUAY_IO_PASSWORD" quay.io
+
+  echodate "Pushing manifest and images ..."
+  buildah manifest push --all "$manifest" "docker://$repository:$version"
+else
+  echodate "Not pushing images, as \$DRY_RUN is set."
+fi
 
 echodate "Done."
