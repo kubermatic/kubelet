@@ -17,15 +17,11 @@
 set -euo pipefail
 
 cd $(dirname $0)/../..
+source hack/lib.sh
 
 repository=quay.io/kubermatic/kubelet
 version=$(git describe --tags --match='v*' --always)
 defaultArch=amd64
-
-echodate() {
-  # do not use -Is to keep this compatible with macOS
-  echo "[$(date +%Y-%m-%dT%H:%M:%S%:z)]" "$@"
-}
 
 publish() {
   local localName="$1"
