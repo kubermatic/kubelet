@@ -19,7 +19,7 @@ set -euo pipefail
 cd $(dirname $0)/../..
 source hack/lib.sh
 
-repository="kubermatic/kubermatic"
+repository="kubermatic/kubelet"
 githubUser="kubermatic-bot"
 
 get_pulls() {
@@ -84,15 +84,17 @@ if ! git diff --stat --exit-code >/dev/null; then
   echodate "Changes detected, creating pull request..."
 
   branchName="update-$(date +%Y%m%d%H%M)"
-  prBody="hack/ci/pr-body.txt"
-  sed -i "s/__VERSIONS__/$changedVersions/g" $prBody
+  token="${GITHUB_TOKEN:-$(cat /etc/github/oauth | tr --delete '\n')}"
 
   git checkout -B "$branchName"
   git commit --all --message "add $changedVersions"
   git push origin "$branchName"
 
+  prBody="hack/ci/pr-body.txt"
+  sed -i "s/__VERSIONS__/$changedVersions/g" $prBody
+
   body=$(
-    jq \
+    jq -cr \
       --rawfile "body" "$prBody" \
       --arg "branch" "$branchName" \
       --arg "title" "add $changedVersions" \
@@ -107,6 +109,8 @@ if ! git diff --stat --exit-code >/dev/null; then
 
   curl \
     --request POST \
+    --header "Authorization: token $token" \
+    --header "Content-Type: application/json; charset=utf-8" \
     --header "Accept: application/vnd.github.v3+json" \
     --data "$body" \
     "https://api.github.com/repos/$repository/pulls"
