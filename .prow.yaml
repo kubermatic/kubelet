@@ -92,3 +92,25 @@ presubmits:
             requests:
               cpu: 2
               memory: 3Gi
+
+  - name: pre-kubermatic-kubelet-test-building-v1.21
+    always_run: true
+    decorate: true
+    clone_uri: "ssh://git@github.com/kubermatic/kubelet.git"
+    spec:
+      containers:
+        - image: quay.io/containers/buildah:v1.17.0
+          command:
+            - ./hack/ci/build-images.sh
+          env:
+            - name: DRY_RUN
+              value: superdry
+            - name: MINOR_VERSION
+              value: v1.21
+          # docker-in-docker needs privileged mode
+          securityContext:
+            privileged: true
+          resources:
+            requests:
+              cpu: 2
+              memory: 3Gi
