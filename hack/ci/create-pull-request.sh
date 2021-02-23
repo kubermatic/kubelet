@@ -69,7 +69,7 @@ for dir in v1*; do
       arch="${dockerfile##*.}"
       checksum=$(get_checksum $arch $newVersion)
 
-      sed -i "s/CHECKSUM=.*/CHECKSUM=$checksum/m" $dockerfile
+      sed -i "s/CHECKSUM=.*/CHECKSUM=$checksum/" $dockerfile
     done
 
     if [ -z "$changedVersions" ]; then
@@ -84,7 +84,7 @@ if ! git diff --stat --exit-code >/dev/null; then
   echodate "Changes detected, creating pull request..."
 
   branchName="update-$(date +%Y%m%d%H%M)"
-  token="${GITHUB_TOKEN:-$(cat /etc/github/oauth | tr --delete '\n')}"
+  token="${GITHUB_TOKEN:-$(cat /etc/github/oauth | tr -d '\n')}"
 
   git checkout -B "$branchName"
   git commit --all --message "add $changedVersions"
