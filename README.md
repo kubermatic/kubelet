@@ -1,6 +1,6 @@
 # Containerized Kubelet
 
-This repository contains Docker images for kubelet 1.19+. Both amd64 and arm64 are provided as
+This repository contains Docker images for kubelet 1.18+. Both amd64 and arm64 are provided as
 multiarch images.
 
 ## Images
