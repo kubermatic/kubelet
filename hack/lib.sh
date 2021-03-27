@@ -80,3 +80,41 @@ write_junit() {
 </testsuites>
 EOF
 }
+
+update_readme() {
+  overview=''
+  overview+=$'| Minor | Version | Type | Image |\n'
+  overview+=$'| ----- | ------- | ---- | ----- |\n'
+
+  for dir in $(find . -name 'v*' -type d | sort -V -r); do
+    knownVersion=$(cat $dir/version)
+    majorMinor="$(echo "${knownVersion#v}" | cut -d- -f1 | cut -d. -f1-2)"
+
+    multiarch="quay.io/kubermatic/kubelet:$knownVersion"
+    overview+="| $majorMinor | $knownVersion | multi-arch | [\`$multiarch\`](https://$multiarch) |"
+    overview+=$'\n'
+
+    for dockerfile in $dir/Dockerfile.*; do
+      arch="${dockerfile##*.}"
+
+      archImage="quay.io/kubermatic/kubelet:$knownVersion-$arch"
+      overview+="| | | $arch | [\`$archImage\`](https://$archImage) |"
+      overview+=$'\n'
+    done
+  done
+
+  # we don't have perl, we don't have python, but we have hacks!
+
+  # replace newlines with placeholder
+  newline="\n"
+  placeholder="\f"
+
+  cat README.md | tr "$newline" "$placeholder" > README.md.single
+  overview=$(echo "$overview" | tr "$newline" "$placeholder")
+
+  # replace actual content
+  sed -E -i "s#(<!-- versions_start -->).*(<!-- versions_end -->)#\1\n$overview\n\2#g" README.md.single
+
+  # turn back to normal newlines
+  cat README.md.single | tr "$placeholder" "$newline" > README.md
+}

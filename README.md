@@ -1,11 +1,32 @@
 # Containerized Kubelet
 
-This repository contains Docker images for kubelet 1.18+. Both amd64 and arm64 are provided as
-multiarch images.
+This repository contains Docker images for all kubelet versions currently supported by upstream.
+Both amd64 and arm64 are provided as multiarch images.
 
 ## Images
 
-The published Docker images can be found on quay.io: https://quay.io/repository/kubermatic/kubelet
+The published Docker images can be found on quay.io: https://quay.io/kubermatic/kubelet
+
+Currently the following images are available:
+
+<!-- versions_start -->
+| Minor | Version | Type | Image |
+| ----- | ------- | ---- | ----- |
+| 1.21 | v1.21.0-rc.0 | multi-arch | [`quay.io/kubermatic/kubelet:v1.21.0-rc.0`](https://quay.io/kubermatic/kubelet:v1.21.0-rc.0) |
+| | | amd64 | [`quay.io/kubermatic/kubelet:v1.21.0-rc.0-amd64`](https://quay.io/kubermatic/kubelet:v1.21.0-rc.0-amd64) |
+| | | arm64 | [`quay.io/kubermatic/kubelet:v1.21.0-rc.0-arm64`](https://quay.io/kubermatic/kubelet:v1.21.0-rc.0-arm64) |
+| 1.20 | v1.20.5 | multi-arch | [`quay.io/kubermatic/kubelet:v1.20.5`](https://quay.io/kubermatic/kubelet:v1.20.5) |
+| | | amd64 | [`quay.io/kubermatic/kubelet:v1.20.5-amd64`](https://quay.io/kubermatic/kubelet:v1.20.5-amd64) |
+| | | arm64 | [`quay.io/kubermatic/kubelet:v1.20.5-arm64`](https://quay.io/kubermatic/kubelet:v1.20.5-arm64) |
+| 1.19 | v1.19.9 | multi-arch | [`quay.io/kubermatic/kubelet:v1.19.9`](https://quay.io/kubermatic/kubelet:v1.19.9) |
+| | | amd64 | [`quay.io/kubermatic/kubelet:v1.19.9-amd64`](https://quay.io/kubermatic/kubelet:v1.19.9-amd64) |
+| | | arm64 | [`quay.io/kubermatic/kubelet:v1.19.9-arm64`](https://quay.io/kubermatic/kubelet:v1.19.9-arm64) |
+| 1.18 | v1.18.17 | multi-arch | [`quay.io/kubermatic/kubelet:v1.18.17`](https://quay.io/kubermatic/kubelet:v1.18.17) |
+| | | amd64 | [`quay.io/kubermatic/kubelet:v1.18.17-amd64`](https://quay.io/kubermatic/kubelet:v1.18.17-amd64) |
+| | | arm64 | [`quay.io/kubermatic/kubelet:v1.18.17-arm64`](https://quay.io/kubermatic/kubelet:v1.18.17-arm64) |
+
+
+<!-- versions_end -->
 
 ## Contributing
 

@@ -83,6 +83,9 @@ done
 if ! git diff --stat --exit-code >/dev/null; then
   echodate "Changes detected, creating pull request..."
 
+  # update overview in readme
+  update_readme
+
   branchName="update-$(date +%Y%m%d%H%M)"
   token="${GITHUB_TOKEN:-$(cat /etc/github/oauth | tr -d '\n')}"
 
