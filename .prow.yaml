@@ -33,7 +33,7 @@ presubmits:
     clone_uri: "ssh://git@github.com/kubermatic/kubelet.git"
     spec:
       containers:
-        - image: quay.io/containers/buildah:v1.17.0
+        - image: quay.io/containers/buildah:v1.21.0
           command:
             - ./hack/ci/build-images.sh
           env:
@@ -55,7 +55,7 @@ presubmits:
     clone_uri: "ssh://git@github.com/kubermatic/kubelet.git"
     spec:
       containers:
-        - image: quay.io/containers/buildah:v1.17.0
+        - image: quay.io/containers/buildah:v1.21.0
           command:
             - ./hack/ci/build-images.sh
           env:
@@ -77,7 +77,7 @@ presubmits:
     clone_uri: "ssh://git@github.com/kubermatic/kubelet.git"
     spec:
       containers:
-        - image: quay.io/containers/buildah:v1.17.0
+        - image: quay.io/containers/buildah:v1.21.0
           command:
             - ./hack/ci/build-images.sh
           env:
@@ -99,7 +99,7 @@ presubmits:
     clone_uri: "ssh://git@github.com/kubermatic/kubelet.git"
     spec:
       containers:
-        - image: quay.io/containers/buildah:v1.17.0
+        - image: quay.io/containers/buildah:v1.21.0
           command:
             - ./hack/ci/build-images.sh
           env:
@@ -121,7 +121,7 @@ presubmits:
     clone_uri: "ssh://git@github.com/kubermatic/kubelet.git"
     spec:
       containers:
-        - image: quay.io/containers/buildah:v1.17.0
+        - image: quay.io/containers/buildah:v1.21.0
           command:
             - ./hack/ci/build-images.sh
           env:

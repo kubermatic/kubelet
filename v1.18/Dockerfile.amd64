@@ -1,4 +1,4 @@
-FROM alpine:3.13 AS fetcher
+FROM alpine:3.14 AS fetcher
 LABEL maintainer="support@kubermatic.com"
 
 ARG VERSION
@@ -10,7 +10,7 @@ RUN apk add curl && \
     echo "${CHECKSUM}  node.tar.gz" | sha512sum -c && \
     tar xzf node.tar.gz kubernetes/node/bin/kubectl kubernetes/node/bin/kubelet
 
-FROM k8s.gcr.io/build-image/debian-iptables:buster-v1.5.0
+FROM k8s.gcr.io/build-image/debian-iptables:buster-v1.6.5
 LABEL maintainer="support@kubermatic.com"
 
 RUN DEBIAN_FRONTEND=noninteractive /usr/local/bin/clean-install \
