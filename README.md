@@ -24,9 +24,9 @@ Currently the following images are available:
 | 1.20 | v1.20.10 | multi-arch | [`quay.io/kubermatic/kubelet:v1.20.10`](https://quay.io/kubermatic/kubelet:v1.20.10) |
 | | | amd64 | [`quay.io/kubermatic/kubelet:v1.20.10-amd64`](https://quay.io/kubermatic/kubelet:v1.20.10-amd64) |
 | | | arm64 | [`quay.io/kubermatic/kubelet:v1.20.10-arm64`](https://quay.io/kubermatic/kubelet:v1.20.10-arm64) |
-| 1.19 | v1.19.14 | multi-arch | [`quay.io/kubermatic/kubelet:v1.19.14`](https://quay.io/kubermatic/kubelet:v1.19.14) |
-| | | amd64 | [`quay.io/kubermatic/kubelet:v1.19.14-amd64`](https://quay.io/kubermatic/kubelet:v1.19.14-amd64) |
-| | | arm64 | [`quay.io/kubermatic/kubelet:v1.19.14-arm64`](https://quay.io/kubermatic/kubelet:v1.19.14-arm64) |
+| 1.19 | v1.19.15 | multi-arch | [`quay.io/kubermatic/kubelet:v1.19.15`](https://quay.io/kubermatic/kubelet:v1.19.15) |
+| | | amd64 | [`quay.io/kubermatic/kubelet:v1.19.15-amd64`](https://quay.io/kubermatic/kubelet:v1.19.15-amd64) |
+| | | arm64 | [`quay.io/kubermatic/kubelet:v1.19.15-arm64`](https://quay.io/kubermatic/kubelet:v1.19.15-arm64) |
 | 1.18 | v1.18.20 | multi-arch | [`quay.io/kubermatic/kubelet:v1.18.20`](https://quay.io/kubermatic/kubelet:v1.18.20) |
 | | | amd64 | [`quay.io/kubermatic/kubelet:v1.18.20-amd64`](https://quay.io/kubermatic/kubelet:v1.18.20-amd64) |
 | | | arm64 | [`quay.io/kubermatic/kubelet:v1.18.20-arm64`](https://quay.io/kubermatic/kubelet:v1.18.20-arm64) |
