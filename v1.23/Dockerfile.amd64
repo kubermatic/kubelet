@@ -10,10 +10,10 @@ RUN apk add curl && \
     echo "${CHECKSUM}  node.tar.gz" | sha512sum -c && \
     tar xzf node.tar.gz kubernetes/node/bin/kubectl kubernetes/node/bin/kubelet
 
-FROM k8s.gcr.io/build-image/debian-iptables:buster-v1.6.6
+FROM k8s.gcr.io/build-image/debian-iptables:bullseye-v1.0.0
 LABEL maintainer="support@kubermatic.com"
 
-RUN DEBIAN_FRONTEND=noninteractive /usr/local/bin/clean-install \
+RUN DEBIAN_FRONTEND=noninteractive /usr/local/bin/clean-install --allow-change-held-packages \
     bash \
     ca-certificates \
     ceph-common \
@@ -23,6 +23,7 @@ RUN DEBIAN_FRONTEND=noninteractive /usr/local/bin/clean-install \
     glusterfs-client \
     iproute2 \
     jq \
+    libcap2 \
     nfs-common \
     socat \
     udev \
