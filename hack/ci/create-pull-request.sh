@@ -61,8 +61,14 @@ fi
 
 changedVersions=""
 changedBaseImages=""
+today="$(date +%Y-%m-%d)"
 
 for dir in v1*; do
+  # ignore dir if it's past end-of-life already
+  if [ -f "$dir/eol" ] && [[ "$(cat $dir/eol)" < "$today" ]]; then
+    continue
+  fi
+
   echodate "Checking $dir"
   knownVersion=$(cat $dir/version)
   baseImageTag=$(cat $dir/baseimage)
