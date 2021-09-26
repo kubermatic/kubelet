@@ -14,6 +14,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# This script checks for the existence of new releases for Kubernetes.
+# If we already have a stable version (e.g. 1.22.2), only new stable
+# versions are considered. If we have an unstable version (e.g. 1.23.0-alpha.1),
+# all new versions are considered (e.g. alpha.1 => beta.0).
+# The script also checks if new base images are available.
+
 set -euo pipefail
 
 cd $(dirname $0)/../..
@@ -30,6 +36,18 @@ get_version() {
   curl -sfL "https://dl.k8s.io/release/$1-$2.txt"
 }
 
+get_baseimage_version() {
+  local knownTag="$1"
+  local variant="$(echo "$knownTag" | cut -d- -f1)"
+  local tmpFile="variants.yaml"
+
+  if [ ! -f "$tmpFile" ]; then
+    curl -sfLO "https://raw.githubusercontent.com/kubernetes/release/master/images/build/debian-iptables/variants.yaml"
+  fi
+
+  yq read "$tmpFile" "variants.$variant.IMAGE_VERSION"
+}
+
 get_checksum() {
   curl -sfL "https://dl.k8s.io/$2/kubernetes-node-linux-$1.tar.gz.sha512"
 }
@@ -42,40 +60,57 @@ if [[ $(get_pulls | jq -r '.[].user.login') =~ "$githubUser" ]]; then
 fi
 
 changedVersions=""
+changedBaseImages=""
 
 for dir in v1*; do
   echodate "Checking $dir"
   knownVersion=$(cat $dir/version)
+  baseImageTag=$(cat $dir/baseimage)
 
   # trim away any suffix like "-alpha.1" and the patch version
   majorMinor="$(echo "${knownVersion#v}" | cut -d- -f1 | cut -d. -f1-2)"
 
-  echodate "  Known version....: $knownVersion"
+  echodate "  Known version....: $knownVersion (based on $baseImageTag)"
 
   # this can be an empty string if there is no stable version yet
   newVersion=$(get_version stable $majorMinor || true)
+
+  # determine most recent base image version
+  newBaseImageTag="$(get_baseimage_version "$baseImageTag")"
 
   # if we there is no new stable version, check unstable
   if [ -z "$newVersion" ]; then
     newVersion=$(get_version latest $majorMinor)
   fi
 
-  echodate "  Newest version...: $newVersion"
+  echodate "  Newest version...: $newVersion (based on $newBaseImageTag)"
 
-  if [ "$knownVersion" != "$newVersion" ]; then
+  if [ "$knownVersion" != "$newVersion" ] || [ "$baseImageTag" != "$newBaseImageTag" ]; then
     echo "$newVersion" > $dir/version
+    echo "$newBaseImageTag" > $dir/baseimage
 
     for dockerfile in $dir/Dockerfile.*; do
       arch="${dockerfile##*.}"
       checksum=$(get_checksum $arch $newVersion)
 
       sed -i "s/CHECKSUM=.*/CHECKSUM=$checksum/" $dockerfile
+      sed -i "s/FROM \(.*\):$baseImageTag/FROM \1:$newBaseImageTag/" $dockerfile
     done
 
-    if [ -z "$changedVersions" ]; then
-      changedVersions="$newVersion"
-    else
-      changedVersions="$changedVersions, $newVersion"
+    if [ "$knownVersion" != "$newVersion" ]; then
+      if [ -z "$changedVersions" ]; then
+        changedVersions="$newVersion"
+      else
+        changedVersions="$changedVersions, $newVersion"
+      fi
+    fi
+
+    if [ "$baseImageTag" != "$newBaseImageTag" ]; then
+      if [ -z "$changedBaseImages" ]; then
+        changedBaseImages="$dir"
+      else
+        changedBaseImages="$changedBaseImages, $dir"
+      fi
     fi
   fi
 done
@@ -89,8 +124,21 @@ if ! git diff --stat --exit-code >/dev/null; then
   branchName="update-$(date +%Y%m%d%H%M)"
   token="${GITHUB_TOKEN:-$(cat /etc/github/oauth | tr -d '\n')}"
 
+  title=""
+  if [ -n "$changedVersions" ]; then
+    title="add $changedVersions"
+  fi
+
+  if [ -n "$changedBaseImages" ]; then
+    if [ -n "$title" ]; then
+      title="$title, "
+    fi
+
+    title="${title}update base images for $changedBaseImages"
+  fi
+
   git checkout -B "$branchName"
-  git commit --all --message "add $changedVersions"
+  git commit --all --message "$title"
   git push origin "$branchName"
 
   prBody="hack/ci/pr-body.txt"
@@ -100,7 +148,7 @@ if ! git diff --stat --exit-code >/dev/null; then
     jq -cr \
       --rawfile "body" "$prBody" \
       --arg "branch" "$branchName" \
-      --arg "title" "add $changedVersions" \
+      --arg "title" "$title" \
       '{
         title: $title,
         body: $body,
