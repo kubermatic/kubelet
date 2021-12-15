@@ -18,12 +18,12 @@ Currently the following images are available:
 | 1.22 | v1.22.4 | multi-arch | [`quay.io/kubermatic/kubelet:v1.22.4`](https://quay.io/kubermatic/kubelet:v1.22.4) |
 | | | amd64 | [`quay.io/kubermatic/kubelet:v1.22.4-amd64`](https://quay.io/kubermatic/kubelet:v1.22.4-amd64) |
 | | | arm64 | [`quay.io/kubermatic/kubelet:v1.22.4-arm64`](https://quay.io/kubermatic/kubelet:v1.22.4-arm64) |
-| 1.21 | v1.21.7 | multi-arch | [`quay.io/kubermatic/kubelet:v1.21.7`](https://quay.io/kubermatic/kubelet:v1.21.7) |
-| | | amd64 | [`quay.io/kubermatic/kubelet:v1.21.7-amd64`](https://quay.io/kubermatic/kubelet:v1.21.7-amd64) |
-| | | arm64 | [`quay.io/kubermatic/kubelet:v1.21.7-arm64`](https://quay.io/kubermatic/kubelet:v1.21.7-arm64) |
-| 1.20 | v1.20.13 | multi-arch | [`quay.io/kubermatic/kubelet:v1.20.13`](https://quay.io/kubermatic/kubelet:v1.20.13) |
-| | | amd64 | [`quay.io/kubermatic/kubelet:v1.20.13-amd64`](https://quay.io/kubermatic/kubelet:v1.20.13-amd64) |
-| | | arm64 | [`quay.io/kubermatic/kubelet:v1.20.13-arm64`](https://quay.io/kubermatic/kubelet:v1.20.13-arm64) |
+| 1.21 | v1.21.8 | multi-arch | [`quay.io/kubermatic/kubelet:v1.21.8`](https://quay.io/kubermatic/kubelet:v1.21.8) |
+| | | amd64 | [`quay.io/kubermatic/kubelet:v1.21.8-amd64`](https://quay.io/kubermatic/kubelet:v1.21.8-amd64) |
+| | | arm64 | [`quay.io/kubermatic/kubelet:v1.21.8-arm64`](https://quay.io/kubermatic/kubelet:v1.21.8-arm64) |
+| 1.20 | v1.20.14 | multi-arch | [`quay.io/kubermatic/kubelet:v1.20.14`](https://quay.io/kubermatic/kubelet:v1.20.14) |
+| | | amd64 | [`quay.io/kubermatic/kubelet:v1.20.14-amd64`](https://quay.io/kubermatic/kubelet:v1.20.14-amd64) |
+| | | arm64 | [`quay.io/kubermatic/kubelet:v1.20.14-arm64`](https://quay.io/kubermatic/kubelet:v1.20.14-arm64) |
 | 1.19 | v1.19.16 | multi-arch | [`quay.io/kubermatic/kubelet:v1.19.16`](https://quay.io/kubermatic/kubelet:v1.19.16) |
 | | | amd64 | [`quay.io/kubermatic/kubelet:v1.19.16-amd64`](https://quay.io/kubermatic/kubelet:v1.19.16-amd64) |
 | | | arm64 | [`quay.io/kubermatic/kubelet:v1.19.16-arm64`](https://quay.io/kubermatic/kubelet:v1.19.16-arm64) |
