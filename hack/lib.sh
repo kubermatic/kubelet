@@ -82,25 +82,46 @@ EOF
 }
 
 update_readme() {
+  today="$(date +%Y-%m-%d)"
+  archs="amd64 arm64"
+
   overview=''
-  overview+=$'| Minor | Version | Type | Image |\n'
-  overview+=$'| ----- | ------- | ---- | ----- |\n'
+  overview+=$'| Minor | Latest Version | multi-arch |'
+
+  for arch in $archs; do
+    overview+=" $arch |"
+  done
+
+  overview+=$'\n'
+
+  overview+=$'| ----- | ------- | ---------- |'
+  for arch in $archs; do
+    overview+=" ----- |"
+  done
+  overview+=$'\n'
 
   for dir in $(find . -name 'v*' -type d | sort -V -r); do
     knownVersion=$(cat $dir/version)
     majorMinor="$(echo "${knownVersion#v}" | cut -d- -f1 | cut -d. -f1-2)"
 
+    eolNote=""
+    if [ -f "$dir/eol" ] && [[ "$(cat $dir/eol)" < "$today" ]]; then
+      eolNote=" (EOL)"
+    fi
+
     multiarch="quay.io/kubermatic/kubelet:$knownVersion"
-    overview+="| $majorMinor | $knownVersion | multi-arch | [\`$multiarch\`](https://$multiarch) |"
-    overview+=$'\n'
+    overview+="| ${majorMinor}$eolNote | $knownVersion | [\`$knownVersion\`](https://$multiarch) |"
 
-    for dockerfile in $dir/Dockerfile.*; do
-      arch="${dockerfile##*.}"
+    for arch in $archs; do
+      dockerfile="$dir/Dockerfile.$arch"
 
-      archImage="quay.io/kubermatic/kubelet:$knownVersion-$arch"
-      overview+="| | | $arch | [\`$archImage\`](https://$archImage) |"
-      overview+=$'\n'
+      if [ -f "$dockerfile" ]; then
+        archImage="quay.io/kubermatic/kubelet:$knownVersion-$arch"
+        overview+=" [\`$knownVersion-$arch\`](https://$archImage) |"
+      fi
     done
+
+    overview+=$'\n'
   done
 
   # we don't have perl, we don't have python, but we have hacks!
