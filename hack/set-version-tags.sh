@@ -26,9 +26,9 @@ set -euo pipefail
 cd $(dirname $0)/..
 source hack/lib.sh
 
-tagSet=false
-
 (set -x; git checkout master; git pull)
+
+tagsCreated=""
 
 for dir in v1*; do
   knownVersion=$(cat $dir/version)
@@ -36,10 +36,15 @@ for dir in v1*; do
   if ! git tag | grep -q -E "^$knownVersion\$"; then
     trimmed="${knownVersion#v}"
     (set -x; git tag -m "version $trimmed" "$knownVersion")
-    tagSet=true
+    tagsCreated="$tagsCreated $knownVersion"
   fi
 done
 
-if $tagSet; then
-  (set -x; git push --tags)
+if [ -n "$tagsCreated" ]; then
+  # push tags individually, because doing it a single push
+  # will not trigger the appropriate Prowjobs for new tags
+  for tag in $tagsCreated; do
+    (set -x; echo git push origin "$tag")
+    sleep 3
+  done
 fi
