@@ -44,7 +44,7 @@ if [ -n "$tagsCreated" ]; then
   # push tags individually, because doing it a single push
   # will not trigger the appropriate Prowjobs for new tags
   for tag in $tagsCreated; do
-    (set -x; echo git push origin "$tag")
+    (set -x; git push origin "$tag")
     sleep 3
   done
 fi

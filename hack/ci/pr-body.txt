@@ -1,6 +1,6 @@
 This PR updates the checksums and/or base images for __VERSIONS__ and was created automatically by `hack/ci/create-pull-request.sh`.
 
-No further pull requests will be opened until this one is closed or merged.
+No further pull requests will be opened until this one is closed or merged. After the merge, the reviewer must run the `hack/set-version-tags.sh` to create the tags and push them to GitHub.
 
 /assign xmudrii
 /assign xrstf
