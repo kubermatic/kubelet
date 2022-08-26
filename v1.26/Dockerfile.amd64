@@ -1,0 +1,36 @@
+FROM alpine:3.14 AS fetcher
+LABEL maintainer="support@kubermatic.com"
+
+ARG VERSION
+ARG ARCH=amd64
+ARG CHECKSUM=1478e0b18dafde6e62a385c307cc2473582a0a1af397cff4ef44cff1073c1c90835b0d9ff5edb8a454c6dbfbb0ac4ebe172489d805c5734a8b51413554e15403
+
+RUN apk add curl && \
+    curl -Lo node.tar.gz https://dl.k8s.io/${VERSION}/kubernetes-node-linux-${ARCH}.tar.gz && \
+    echo "${CHECKSUM}  node.tar.gz" | sha512sum -c && \
+    tar xzf node.tar.gz kubernetes/node/bin/kubectl kubernetes/node/bin/kubelet
+
+FROM k8s.gcr.io/build-image/debian-iptables:bullseye-v1.5.1
+LABEL maintainer="support@kubermatic.com"
+
+RUN DEBIAN_FRONTEND=noninteractive /usr/local/bin/clean-install --allow-change-held-packages \
+    bash \
+    ca-certificates \
+    ceph-common \
+    cifs-utils \
+    e2fsprogs \
+    ethtool \
+    glusterfs-client \
+    iproute2 \
+    jq \
+    libcap2 \
+    nfs-common \
+    socat \
+    udev \
+    util-linux \
+    xfsprogs
+
+COPY --from=fetcher /kubernetes/node/bin/kubelet /usr/local/bin/kubelet
+COPY --from=fetcher /kubernetes/node/bin/kubectl /usr/local/bin/kubectl
+
+ENTRYPOINT ["/usr/local/bin/kubelet"]
