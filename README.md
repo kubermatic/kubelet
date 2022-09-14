@@ -40,10 +40,10 @@ Thanks for taking the time to join our community and start contributing!
 * We welcome pull requests. Feel free to dig through the [issues][1] and jump in.
 
 [1]: https://github.com/kubermatic/kubelet/issues
-[2]: https://github.com/kubermatic/kubelet/blob/master/CONTRIBUTING.md
-[3]: https://github.com/kubermatic/kubelet/blob/master/CODE_OF_CONDUCT.md
+[2]: https://github.com/kubermatic/kubelet/blob/main/CONTRIBUTING.md
+[3]: https://github.com/kubermatic/kubelet/blob/main/CODE_OF_CONDUCT.md
 
 [11]: https://groups.google.com/forum/#!forum/kubermatic-dev
 [12]: https://kubermatic.slack.com/messages/kubelet
-[13]: https://github.com/kubermatic/kubelet/blob/master/Zenhub.md
+[13]: https://github.com/kubermatic/kubelet/blob/main/Zenhub.md
 [15]: http://slack.kubermatic.io/
