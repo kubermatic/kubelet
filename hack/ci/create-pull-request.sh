@@ -159,7 +159,7 @@ if ! git diff --stat --exit-code >/dev/null; then
         title: $title,
         body: $body,
         head: $branch,
-        base: "master",
+        base: "main",
         maintainer_can_modify: true
       }' <<<'{}'
   )
