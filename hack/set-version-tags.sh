@@ -26,7 +26,7 @@ set -euo pipefail
 cd $(dirname $0)/..
 source hack/lib.sh
 
-(set -x; git checkout master; git pull)
+(set -x; git checkout main; git pull)
 
 tagsCreated=""
 
