@@ -3,7 +3,7 @@ LABEL maintainer="support@kubermatic.com"
 
 ARG VERSION
 ARG ARCH=amd64
-ARG CHECKSUM=d7c02a8ea50f9646d0931cf49fd4784128b6b2187d882c836e496a0e343200a79066476006eb54999aa10f9a76c6f41c579f6991357303f362770ad893174698
+ARG CHECKSUM=d95625a94f8079d10f86d13bcae55c8d380b10e6b2deb6d956d3852ccd0b48dc594e84ba9c108f2f8360dd3146a184b8621c86bc7c84c34ac7995bb9f1e5f2bd
 
 RUN apk add curl && \
     curl -Lo node.tar.gz https://dl.k8s.io/${VERSION}/kubernetes-node-linux-${ARCH}.tar.gz && \
