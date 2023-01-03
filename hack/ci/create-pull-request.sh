@@ -45,7 +45,7 @@ get_baseimage_version() {
     curl -sfLO "https://raw.githubusercontent.com/kubernetes/release/master/images/build/debian-iptables/variants.yaml"
   fi
 
-  yq read "$tmpFile" "variants.$variant.IMAGE_VERSION"
+  yq ".variants.$variant.IMAGE_VERSION" "$tmpFile"
 }
 
 get_checksum() {
