@@ -12,7 +12,7 @@ Currently the following images are available:
 <!-- versions_start -->
 | Minor | Latest Version | multi-arch | amd64 | arm64 |
 | ----- | ------- | ---------- | ----- | ----- |
-| 1.27 | v1.27.0-alpha.1 | [`v1.27.0-alpha.1`](https://quay.io/kubermatic/kubelet:v1.27.0-alpha.1) | [`v1.27.0-alpha.1-amd64`](https://quay.io/kubermatic/kubelet:v1.27.0-alpha.1-amd64) | [`v1.27.0-alpha.1-arm64`](https://quay.io/kubermatic/kubelet:v1.27.0-alpha.1-arm64) |
+| 1.27 | v1.27.0-alpha.2 | [`v1.27.0-alpha.2`](https://quay.io/kubermatic/kubelet:v1.27.0-alpha.2) | [`v1.27.0-alpha.2-amd64`](https://quay.io/kubermatic/kubelet:v1.27.0-alpha.2-amd64) | [`v1.27.0-alpha.2-arm64`](https://quay.io/kubermatic/kubelet:v1.27.0-alpha.2-arm64) |
 | 1.26 | v1.26.1 | [`v1.26.1`](https://quay.io/kubermatic/kubelet:v1.26.1) | [`v1.26.1-amd64`](https://quay.io/kubermatic/kubelet:v1.26.1-amd64) | [`v1.26.1-arm64`](https://quay.io/kubermatic/kubelet:v1.26.1-arm64) |
 | 1.25 | v1.25.6 | [`v1.25.6`](https://quay.io/kubermatic/kubelet:v1.25.6) | [`v1.25.6-amd64`](https://quay.io/kubermatic/kubelet:v1.25.6-amd64) | [`v1.25.6-arm64`](https://quay.io/kubermatic/kubelet:v1.25.6-arm64) |
 | 1.24 | v1.24.10 | [`v1.24.10`](https://quay.io/kubermatic/kubelet:v1.24.10) | [`v1.24.10-amd64`](https://quay.io/kubermatic/kubelet:v1.24.10-amd64) | [`v1.24.10-arm64`](https://quay.io/kubermatic/kubelet:v1.24.10-arm64) |
