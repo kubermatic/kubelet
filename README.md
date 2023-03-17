@@ -12,10 +12,10 @@ Currently the following images are available:
 <!-- versions_start -->
 | Minor | Latest Version | multi-arch | amd64 | arm64 |
 | ----- | ------- | ---------- | ----- | ----- |
-| 1.27 | v1.27.0-alpha.3 | [`v1.27.0-alpha.3`](https://quay.io/kubermatic/kubelet:v1.27.0-alpha.3) | [`v1.27.0-alpha.3-amd64`](https://quay.io/kubermatic/kubelet:v1.27.0-alpha.3-amd64) | [`v1.27.0-alpha.3-arm64`](https://quay.io/kubermatic/kubelet:v1.27.0-alpha.3-arm64) |
-| 1.26 | v1.26.2 | [`v1.26.2`](https://quay.io/kubermatic/kubelet:v1.26.2) | [`v1.26.2-amd64`](https://quay.io/kubermatic/kubelet:v1.26.2-amd64) | [`v1.26.2-arm64`](https://quay.io/kubermatic/kubelet:v1.26.2-arm64) |
-| 1.25 | v1.25.7 | [`v1.25.7`](https://quay.io/kubermatic/kubelet:v1.25.7) | [`v1.25.7-amd64`](https://quay.io/kubermatic/kubelet:v1.25.7-amd64) | [`v1.25.7-arm64`](https://quay.io/kubermatic/kubelet:v1.25.7-arm64) |
-| 1.24 | v1.24.11 | [`v1.24.11`](https://quay.io/kubermatic/kubelet:v1.24.11) | [`v1.24.11-amd64`](https://quay.io/kubermatic/kubelet:v1.24.11-amd64) | [`v1.24.11-arm64`](https://quay.io/kubermatic/kubelet:v1.24.11-arm64) |
+| 1.27 | v1.27.0-beta.0 | [`v1.27.0-beta.0`](https://quay.io/kubermatic/kubelet:v1.27.0-beta.0) | [`v1.27.0-beta.0-amd64`](https://quay.io/kubermatic/kubelet:v1.27.0-beta.0-amd64) | [`v1.27.0-beta.0-arm64`](https://quay.io/kubermatic/kubelet:v1.27.0-beta.0-arm64) |
+| 1.26 | v1.26.3 | [`v1.26.3`](https://quay.io/kubermatic/kubelet:v1.26.3) | [`v1.26.3-amd64`](https://quay.io/kubermatic/kubelet:v1.26.3-amd64) | [`v1.26.3-arm64`](https://quay.io/kubermatic/kubelet:v1.26.3-arm64) |
+| 1.25 | v1.25.8 | [`v1.25.8`](https://quay.io/kubermatic/kubelet:v1.25.8) | [`v1.25.8-amd64`](https://quay.io/kubermatic/kubelet:v1.25.8-amd64) | [`v1.25.8-arm64`](https://quay.io/kubermatic/kubelet:v1.25.8-arm64) |
+| 1.24 | v1.24.12 | [`v1.24.12`](https://quay.io/kubermatic/kubelet:v1.24.12) | [`v1.24.12-amd64`](https://quay.io/kubermatic/kubelet:v1.24.12-amd64) | [`v1.24.12-arm64`](https://quay.io/kubermatic/kubelet:v1.24.12-arm64) |
 | 1.23 (EOL) | v1.23.17 | [`v1.23.17`](https://quay.io/kubermatic/kubelet:v1.23.17) | [`v1.23.17-amd64`](https://quay.io/kubermatic/kubelet:v1.23.17-amd64) | [`v1.23.17-arm64`](https://quay.io/kubermatic/kubelet:v1.23.17-arm64) |
 | 1.22 (EOL) | v1.22.15 | [`v1.22.15`](https://quay.io/kubermatic/kubelet:v1.22.15) | [`v1.22.15-amd64`](https://quay.io/kubermatic/kubelet:v1.22.15-amd64) | [`v1.22.15-arm64`](https://quay.io/kubermatic/kubelet:v1.22.15-arm64) |
 | 1.21 (EOL) | v1.21.14 | [`v1.21.14`](https://quay.io/kubermatic/kubelet:v1.21.14) | [`v1.21.14-amd64`](https://quay.io/kubermatic/kubelet:v1.21.14-amd64) | [`v1.21.14-arm64`](https://quay.io/kubermatic/kubelet:v1.21.14-arm64) |
