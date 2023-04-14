@@ -24,6 +24,20 @@ if [ -z "${MINOR_VERSION:-}" ]; then
   exit 1
 fi
 
+if [ -n "${DOCKER_REGISTRY_MIRROR_ADDR:-}" ]; then
+  # remove "http://" or "https://" prefix
+  mirror="$(echo "$DOCKER_REGISTRY_MIRROR_ADDR" | awk -F// '{print $NF}')"
+
+  echodate "Configuring registry mirror for docker.io ..."
+
+  cat <<EOF > /etc/containers/registries.conf.d/mirror.conf
+[[registry]]
+prefix = "docker.io"
+insecure = true
+location = "$mirror"
+EOF
+fi
+
 echodate "Building Docker image for $MINOR_VERSION ..."
 cd "$MINOR_VERSION"
 
