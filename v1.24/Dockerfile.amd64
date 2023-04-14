@@ -1,4 +1,4 @@
-FROM alpine:3.14 AS fetcher
+FROM alpine:3.17 AS fetcher
 LABEL maintainer="support@kubermatic.com"
 
 ARG VERSION
