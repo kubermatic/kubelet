@@ -76,7 +76,7 @@ presubmits:
               memory: 3Gi
 
   - name: pre-kubermatic-kubelet-test-building-v1.20
-    run_if_changed: "^(hack|v1.20)/"
+    run_if_changed: "^(v1.20)/"
     decorate: true
     clone_uri: "ssh://git@github.com/kubermatic/kubelet.git"
     labels:
@@ -100,7 +100,7 @@ presubmits:
               memory: 3Gi
 
   - name: pre-kubermatic-kubelet-test-building-v1.21
-    run_if_changed: "^(hack|v1.21)/"
+    run_if_changed: "^(v1.21)/"
     decorate: true
     clone_uri: "ssh://git@github.com/kubermatic/kubelet.git"
     labels:
@@ -124,7 +124,7 @@ presubmits:
               memory: 3Gi
 
   - name: pre-kubermatic-kubelet-test-building-v1.22
-    run_if_changed: "^(hack|v1.22)/"
+    run_if_changed: "^(v1.22)/"
     decorate: true
     clone_uri: "ssh://git@github.com/kubermatic/kubelet.git"
     labels:
@@ -148,7 +148,7 @@ presubmits:
               memory: 3Gi
 
   - name: pre-kubermatic-kubelet-test-building-v1.23
-    run_if_changed: "^(hack|v1.23)/"
+    run_if_changed: "^(v1.23)/"
     decorate: true
     clone_uri: "ssh://git@github.com/kubermatic/kubelet.git"
     labels:
