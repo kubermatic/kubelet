@@ -35,7 +35,6 @@ Thanks for taking the time to join our community and start contributing!
 
 * Please familiarize yourself with the [Code of Conduct][3] before contributing.
 * See [CONTRIBUTING.md][2] for instructions on the developer certificate of origin that we require.
-* Read how [we're using ZenHub][13] for project and roadmap planning
 
 ### Pull requests
 
@@ -47,5 +46,3 @@ Thanks for taking the time to join our community and start contributing!
 
 [11]: https://groups.google.com/forum/#!forum/kubermatic-dev
 [12]: https://kubermatic.slack.com/messages/kubelet
-[13]: https://github.com/kubermatic/kubelet/blob/main/Zenhub.md
-[15]: http://slack.kubermatic.io/
