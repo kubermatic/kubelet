@@ -31,6 +31,8 @@ presubmits:
     run_if_changed: "^(v1.18)/"
     decorate: true
     clone_uri: "ssh://git@github.com/kubermatic/kubelet.git"
+    labels:
+      preset-docker-mirror: "true"
     spec:
       containers:
         - image: quay.io/containers/buildah:v1.21.0
@@ -53,6 +55,8 @@ presubmits:
     run_if_changed: "^(v1.19)/"
     decorate: true
     clone_uri: "ssh://git@github.com/kubermatic/kubelet.git"
+    labels:
+      preset-docker-mirror: "true"
     spec:
       containers:
         - image: quay.io/containers/buildah:v1.21.0
@@ -75,6 +79,8 @@ presubmits:
     run_if_changed: "^(hack|v1.20)/"
     decorate: true
     clone_uri: "ssh://git@github.com/kubermatic/kubelet.git"
+    labels:
+      preset-docker-mirror: "true"
     spec:
       containers:
         - image: quay.io/containers/buildah:v1.21.0
@@ -97,6 +103,8 @@ presubmits:
     run_if_changed: "^(hack|v1.21)/"
     decorate: true
     clone_uri: "ssh://git@github.com/kubermatic/kubelet.git"
+    labels:
+      preset-docker-mirror: "true"
     spec:
       containers:
         - image: quay.io/containers/buildah:v1.21.0
@@ -119,6 +127,8 @@ presubmits:
     run_if_changed: "^(hack|v1.22)/"
     decorate: true
     clone_uri: "ssh://git@github.com/kubermatic/kubelet.git"
+    labels:
+      preset-docker-mirror: "true"
     spec:
       containers:
         - image: quay.io/containers/buildah:v1.21.0
@@ -141,6 +151,8 @@ presubmits:
     run_if_changed: "^(hack|v1.23)/"
     decorate: true
     clone_uri: "ssh://git@github.com/kubermatic/kubelet.git"
+    labels:
+      preset-docker-mirror: "true"
     spec:
       containers:
         - image: quay.io/containers/buildah:v1.21.0
@@ -163,6 +175,8 @@ presubmits:
     run_if_changed: "^(hack|v1.24)/"
     decorate: true
     clone_uri: "ssh://git@github.com/kubermatic/kubelet.git"
+    labels:
+      preset-docker-mirror: "true"
     spec:
       containers:
         - image: quay.io/containers/buildah:v1.21.0
@@ -185,6 +199,8 @@ presubmits:
     run_if_changed: "^(hack|v1.25)/"
     decorate: true
     clone_uri: "ssh://git@github.com/kubermatic/kubelet.git"
+    labels:
+      preset-docker-mirror: "true"
     spec:
       containers:
         - image: quay.io/containers/buildah:v1.21.0
@@ -207,6 +223,8 @@ presubmits:
     run_if_changed: "^(hack|v1.26)/"
     decorate: true
     clone_uri: "ssh://git@github.com/kubermatic/kubelet.git"
+    labels:
+      preset-docker-mirror: "true"
     spec:
       containers:
         - image: quay.io/containers/buildah:v1.21.0
@@ -229,6 +247,8 @@ presubmits:
     run_if_changed: "^(hack|v1.27)/"
     decorate: true
     clone_uri: "ssh://git@github.com/kubermatic/kubelet.git"
+    labels:
+      preset-docker-mirror: "true"
     spec:
       containers:
         - image: quay.io/containers/buildah:v1.21.0
@@ -239,6 +259,30 @@ presubmits:
               value: superdry
             - name: MINOR_VERSION
               value: v1.27
+          # docker-in-docker needs privileged mode
+          securityContext:
+            privileged: true
+          resources:
+            requests:
+              cpu: 2
+              memory: 3Gi
+
+  - name: pre-kubermatic-kubelet-test-building-v1.28
+    run_if_changed: "^(hack|v1.28)/"
+    decorate: true
+    clone_uri: "ssh://git@github.com/kubermatic/kubelet.git"
+    labels:
+      preset-docker-mirror: "true"
+    spec:
+      containers:
+        - image: quay.io/containers/buildah:v1.21.0
+          command:
+            - ./hack/ci/build-images.sh
+          env:
+            - name: DRY_RUN
+              value: superdry
+            - name: MINOR_VERSION
+              value: v1.28
           # docker-in-docker needs privileged mode
           securityContext:
             privileged: true
