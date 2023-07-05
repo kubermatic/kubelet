@@ -24,62 +24,65 @@ if [ -z "${MINOR_VERSION:-}" ]; then
   exit 1
 fi
 
-if [ -n "${DOCKER_REGISTRY_MIRROR_ADDR:-}" ]; then
-  # remove "http://" or "https://" prefix
-  mirror="$(echo "$DOCKER_REGISTRY_MIRROR_ADDR" | awk -F// '{print $NF}')"
+# DOCKER_REGISTRY_MIRROR_ADDR is injected via Prow preset;
+# start-docker.sh is part of the build image.
+echodate "Starting docker ..."
+DOCKER_REGISTRY_MIRROR="${DOCKER_REGISTRY_MIRROR_ADDR:-}" DOCKER_MTU=1400 start-docker.sh
 
-  echodate "Configuring registry mirror for docker.io ..."
-
-  cat <<EOF > /etc/containers/registries.conf.d/mirror.conf
-[[registry]]
-prefix = "docker.io"
-insecure = true
-location = "$mirror"
-EOF
-fi
+# enable the modern buildx plugin
+echodate "Enabling dockerx plugin ..."
+docker buildx install
+docker buildx create --use
 
 echodate "Building Docker image for $MINOR_VERSION ..."
 cd "$MINOR_VERSION"
 
 repository=quay.io/kubermatic/kubelet
 version=$(cat version)
+imageTag="$repository:$version"
 architectures="amd64 arm64"
 
 echodate "Kubernetes version: $version"
 
 # build all images
 for arch in $architectures; do
-  fullTag="$repository:$version-$arch"
+  fullTag="$imageTag-$arch"
 
   echodate "Building $version-$arch ..."
-  buildah build-using-dockerfile \
+  docker buildx build \
+    --load \
+    --platform="linux/$arch" \
+    --build-arg "VERSION=$version" \
     --file "Dockerfile.$arch" \
     --tag "$fullTag" \
-    --arch "$arch" \
-    --override-arch "$arch" \
-    --build-arg "VERSION=$version" \
-    --format=docker \
     .
-done
-
-# create multi-arch manifest
-manifest="$repository:$version"
-
-echodate "Creating manifest $manifest ..."
-buildah manifest create "$manifest"
-for arch in $architectures; do
-  buildah manifest add "$manifest" "$repository:$version-$arch"
 done
 
 # push manifest, except in presubmits
 if [ -z "${DRY_RUN:-}" ]; then
-  echodate "Logging into Quay"
-  retry 5 buildah login --username "$QUAY_IO_USERNAME" --password "$QUAY_IO_PASSWORD" quay.io
+  echodate "Logging into Quay ..."
+  docker login --username "$QUAY_IO_USERNAME" --password "$QUAY_IO_PASSWORD" quay.io
 
-  echodate "Pushing manifest and images ..."
-  buildah manifest push --all "$manifest" "docker://$repository:$version"
+  # build up a space separated string that we use later unquoted
+  tags=""
+
+  for arch in $architectures; do
+    fullTag="$imageTag-$arch"
+    tags="$tags $fullTag"
+
+    echodate "Pushing $fullTag ..."
+    docker push "$fullTag"
+  done
+
+  docker manifest create --amend "$imageTag" $tags
+  for arch in $architectures; do
+    docker manifest annotate --arch "$arch" "$imageTag" "$imageTag-$arch"
+  done
+
+  echodate "Pushing $imageTag ..."
+  docker manifest push --purge "$imageTag"
 else
-  echodate "Not pushing images, as \$DRY_RUN is set."
+  echodate "Not pushing images because \$DRY_RUN is set."
 fi
 
 echodate "Done."
